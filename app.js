@@ -452,10 +452,6 @@ function updateSelectedList() {
     createdInstances.forEach((instance, index) => {
         const itemDiv = document.createElement("div");
         itemDiv.className = "selected-instance-item";
-        itemDiv.style.marginBottom = "5px";
-        itemDiv.style.display = "flex";
-        itemDiv.style.alignItems = "center";
-        itemDiv.style.gap = "8px";
 
         // Material Name and Stats
         const infoSpan = document.createElement("span");
