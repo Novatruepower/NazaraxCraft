@@ -1,4 +1,4 @@
-history.pushState("", "NazaraxCraft", "https://novatruepower.github.io/Nazarax/Craft");
+history.pushState("", "NazaraxCraft", "https://novatruepower.github.io/Nazarax/Craft/");
 
 let currentWidth = 0;
 let lastBtnRefresh = null;
