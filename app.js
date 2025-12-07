@@ -687,7 +687,7 @@ function updatePageWidth() {
 }
 
 /* ---------- initialize ---------- */
-window.onload = async function () {
+function initializeGet() {
     const GetLength = window.location.search.length;
     const currentGets = {};
 
@@ -712,15 +712,7 @@ window.onload = async function () {
             searches.Type = currentGets["type"];
 
         search.value = searches[selectedFilterModeValue];
-    }
 
-    window.addEventListener('resize', updatePageWidth);
-    currentWidth = window.innerWidth;
-    renderMaterials();
-    updateSelectedList();
-    updatePageWidth();
-
-    if (GetLength > 1) {
         if ("detail" in currentGets) {
             const materials = materialsContainer.querySelectorAll('div[class="materialItem"]');
             const detail = currentGets['detail'].toLowerCase();
@@ -731,8 +723,22 @@ window.onload = async function () {
                 }
             }
         }
+
+        if ("console" in currentGets) {
+            runCommand(currentGets['console'].split("-").join(" "));
+        }
     }
+}
+
+
+window.onload = async function () {
+    window.addEventListener('resize', updatePageWidth);
+    updatePageWidth();
+    initializeGet();
 
     if (isNotLocal()) 
         history.pushState("", "NazaraxCraft", "../Nazarax/Craft/");
+
+    renderMaterials();
+    updateSelectedList();
 }
