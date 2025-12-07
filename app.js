@@ -737,7 +737,7 @@ window.onload = async function () {
     initializeGet();
 
     if (isNotLocal()) 
-        history.pushState("", "NazaraxCraft", "../Nazarax/Craft/");
+        history.pushState("", "NazaraxCraft", "../Nazarax/Craft/" + window.location.search);
 
     renderMaterials();
     updateSelectedList();
