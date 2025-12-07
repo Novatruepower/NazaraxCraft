@@ -254,6 +254,20 @@ class ArmorMaterial extends Material {
 }
 // (END existing code)
 
+function isNotLocal() {
+  const hostname = window.location.hostname;
+  // Check for common local hostnames and IP addresses
+  const localIdentifiers = [
+    'localhost',
+    '127.0.0.1',
+    '[::1]' // IPv6 localhost address
+  ];
+
+  // If the hostname is not found in the localIdentifiers array, it's likely not local
+  return !localIdentifiers.includes(hostname);
+}
+
+
 /* ---------- UI & Console-parsing logic (new) ---------- */
 
 const materialsContainer = document.getElementById("materials");
@@ -274,9 +288,9 @@ const clearOutputBtn = document.getElementById("clearOutput");
 let selectedMaterialName = null;
 let createdInstances = [];
 const filterControls = document.getElementById("filterControls");
-let selectedFilterMode = filterControls.querySelector('input[name="filterBy"]:checked').value;
+let selectedFilterModeValue = filterControls.querySelector('input[name="filterBy"]:checked').value;
 const searchControls = document.getElementById("searchLogicControls");
-let selectedSearchMode = searchControls.querySelector('input[name="searchLogic"]:checked').value;
+let selectedSearchModeValue = searchControls.querySelector('input[name="searchLogic"]:checked').value;
 
 
 function renderMaterialsAND(filters) {
@@ -356,15 +370,15 @@ function renderMaterials() {
     materialsContainer.innerHTML = "";
     const filters = {};
 
-    if (selectedSearchMode == "Current") {
-        filters[selectedFilterMode] = searches[selectedFilterMode].toLowerCase();
+    if (selectedSearchModeValue == "Current") {
+        filters[selectedFilterModeValue] = searches[selectedFilterModeValue].toLowerCase();
         renderMaterialsAND(filters);
     } else {
         for (const key in searches) {
             filters[key] = searches[key].toLowerCase();
         }
 
-        if (selectedSearchMode == "AND") {
+        if (selectedSearchModeValue == "AND") {
             renderMaterialsAND(filters);
         } else {
             renderMaterialsOR(filters);
@@ -400,7 +414,7 @@ createBtn.addEventListener("click", () => {
 });
 
 search.addEventListener("input", (e) => {
-    searches[selectedFilterMode] = e.target.value;
+    searches[selectedFilterModeValue] = e.target.value;
     renderMaterials();
 });
 
@@ -642,16 +656,16 @@ clearOutputBtn.addEventListener("click", () => {
 
 filterControls.addEventListener('change', (e) => {
     if (e.target.name === 'filterBy') {
-        searches[selectedFilterMode] = search.value;
-        selectedFilterMode = e.target.value;
-        search.value = searches[selectedFilterMode] ?? "";
+        searches[selectedFilterModeValue] = search.value;
+        selectedFilterModeValue = e.target.value;
+        search.value = searches[selectedFilterModeValue] ?? "";
         renderMaterials();
     }
 });
 
 searchControls.addEventListener('change', (e) => {
     if (e.target.name === 'searchLogic') {
-        selectedSearchMode = e.target.value;
+        selectedSearchModeValue = e.target.value;
         renderMaterials();
     }
 });
@@ -674,10 +688,51 @@ function updatePageWidth() {
 
 /* ---------- initialize ---------- */
 window.onload = async function () {
+    const GetLength = window.location.search.length;
+    const currentGets = {};
+
+    if (GetLength > 1) {
+        const currentGetURL = window.location.search.substring(1, GetLength);
+        currentGetURL.split("&").forEach(e => {
+            const data = e.split("=");
+            currentGets[data[0].toLowerCase()] = data[1];
+        });
+
+        if ("searchlogic" in currentGets) {
+            const newSelectedSearchMode = searchControls.querySelector(`input[name="searchLogic"][value="${currentGets["searchlogic"].toUpperCase()}"]`);
+
+            if (newSelectedSearchMode) {
+                newSelectedSearchMode.checked = true;
+            }
+        }
+
+        if ("name" in currentGets)
+            searches.Name = currentGets["name"];
+        if ("type" in currentGets)
+            searches.Type = currentGets["type"];
+
+        search.value = searches[selectedFilterModeValue];
+    }
+
     window.addEventListener('resize', updatePageWidth);
     currentWidth = window.innerWidth;
     renderMaterials();
     updateSelectedList();
     updatePageWidth();
-    history.pushState("", "NazaraxCraft", "https://novatruepower.github.io/Nazarax/Craft/");
+
+    if (GetLength > 1) {
+        if ("detail" in currentGets) {
+            const materials = materialsContainer.querySelectorAll('div[class="materialItem"]');
+            const detail = currentGets['detail'].toLowerCase();
+            for (const material of materials) {
+                if (material.textContent.toLowerCase() == detail) {
+                    material.click();
+                    break;
+                }
+            }
+        }
+    }
+
+    if (isNotLocal()) 
+        history.pushState("", "NazaraxCraft", "../Nazarax/Craft/");
 }
