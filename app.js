@@ -418,12 +418,70 @@ search.addEventListener("input", (e) => {
     renderMaterials();
 });
 
+function removeInstance(index) {
+    if (index >= 0 && index < createdInstances.length) {
+        createdInstances.splice(index, 1);
+        updateSelectedList();
+    }
+}
+
+function updateInstanceAmount(index, newAmount) {
+    if (index >= 0 && index < createdInstances.length) {
+        const amount = Math.max(0, parseInt(newAmount, 10) || 0); // Ensure amount is non-negative integer
+        if (amount === 0) {
+            removeInstance(index);
+        } else {
+            // Update the amount and recalculate defense/weight properties (which are getters)
+            createdInstances[index].amount = amount;
+            updateSelectedList();
+        }
+    }
+}
+
 function updateSelectedList() {
+    const listContainer = document.getElementById("selectedList");
+    listContainer.innerHTML = ""; // Clear existing content
+
     if (createdInstances.length === 0) {
-        selectedList.textContent = "(none)";
+        const noneText = document.createElement("span");
+        noneText.textContent = "(none)";
+        listContainer.appendChild(noneText);
         return;
     }
-    selectedList.textContent = createdInstances.map(i => `${i.toString()} — Def:${i.Defense} W:${i.Weight}`).join("\n");
+
+    createdInstances.forEach((instance, index) => {
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "selected-instance-item";
+        itemDiv.style.marginBottom = "5px";
+        itemDiv.style.display = "flex";
+        itemDiv.style.alignItems = "center";
+        itemDiv.style.gap = "8px";
+
+        // Material Name and Stats
+        const infoSpan = document.createElement("span");
+        infoSpan.textContent = `${instance.name} — Def:${instance.Defense} W:${instance.Weight}`;
+        infoSpan.style.flexGrow = "1";
+        itemDiv.appendChild(infoSpan);
+
+        // Quantity Input
+        const amountInput = document.createElement("input");
+        amountInput.type = "number";
+        amountInput.min = "0";
+        amountInput.value = instance.amount;
+        amountInput.style.width = "40px";
+        amountInput.onchange = (e) => updateInstanceAmount(index, e.target.value);
+        itemDiv.appendChild(amountInput);
+
+        // Remove Button
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove";
+        removeBtn.style.fontSize = "12px";
+        removeBtn.style.padding = "2px 5px";
+        removeBtn.onclick = () => removeInstance(index);
+        itemDiv.appendChild(removeBtn);
+
+        listContainer.appendChild(itemDiv);
+    });
 }
 
 removeAllBtn.addEventListener("click", () => {
