@@ -1,3 +1,5 @@
+history.pushState("", "NazaraxCraft", "https://novatruepower.github.io/Nazarax/Craft");
+
 let currentWidth = 0;
 let lastBtnRefresh = null;
 const scaleWidthPercentReference = 0.04;
