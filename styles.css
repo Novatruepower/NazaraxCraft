@@ -1,0 +1,22 @@
+:root{
+  --bg:#0f1720;
+  --panel:#0b1220;
+  --accent:#2b7a78;
+  --text:#dbe7ea;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Segoe UI,Roboto,system-ui,Arial;background:linear-gradient(180deg,#071021 0%, #081421 100%);color:var(--text)}
+header{padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.03)}
+main{display:flex;gap:12px;padding:12px}
+#sidebar{width:320px;background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;overflow:auto}
+#content{flex:1;display:flex;flex-direction:column;gap:12px}
+#materials .group{margin-bottom:12px}
+.group h3{margin:6px 0;color:var(--accent)}
+.materialItem{padding:6px 8px;border-radius:6px;cursor:pointer;margin:4px 0;background:rgba(255,255,255,0.01)}
+.materialItem:hover{background:rgba(255,255,255,0.03)}
+pre{white-space:pre-wrap;background:var(--panel);padding:12px;border-radius:8px;overflow:auto}
+.controls{margin-top:8px;display:flex;gap:8px;align-items:center}
+.controls input{width:80px}
+#calculator label{display:inline-block;margin-right:8px}
+#outputArea {min-width: max-content;}
+footer{padding:12px 20px;border-top:1px solid rgba(255,255,255,0.03);font-size:12px}
