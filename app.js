@@ -1,5 +1,3 @@
-history.pushState("", "NazaraxCraft", "https://novatruepower.github.io/Nazarax/Craft/");
-
 let currentWidth = 0;
 let lastBtnRefresh = null;
 const scaleWidthPercentReference = 0.04;
@@ -675,8 +673,11 @@ function updatePageWidth() {
 }
 
 /* ---------- initialize ---------- */
-window.addEventListener('resize', updatePageWidth);
-currentWidth = window.innerWidth;
-renderMaterials();
-updateSelectedList();
-updatePageWidth();
+window.onload = async function () {
+    window.addEventListener('resize', updatePageWidth);
+    currentWidth = window.innerWidth;
+    renderMaterials();
+    updateSelectedList();
+    updatePageWidth();
+    history.pushState("", "NazaraxCraft", "https://novatruepower.github.io/Nazarax/Craft/");
+}
