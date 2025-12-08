@@ -667,8 +667,6 @@ function runCommand(input) {
             }
         });
 
-        createdInstances = createdInstances.concat(parsedInstances);
-
         const totalQty = createdInstances.reduce((accumulator, instance) => {
             return accumulator + instance.amount;
         }, 0);
