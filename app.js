@@ -614,7 +614,7 @@ function runCommand(input) {
         const data = Object.values(EArmor);
         const armors = {};
         data.forEach(d => armors[d.loc] ? armors[d.loc] += ` ${d.name}` : armors[d.loc] = d.name);
-        let chaine = "Armors by ArmorLocatio: ";
+        let chaine = "Armors by ArmorLocation: ";
 
         for (const key in armors) {
             chaine += `${key}:${armors[key]}\n`;
