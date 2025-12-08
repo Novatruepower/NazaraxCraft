@@ -548,18 +548,9 @@ function parseMaterialsFromTokens(tokens, armorLocation = null) {
     // tokens is array of remaining tokens (strings)
     const instances = [];
     const requiredQty = craftingQTYData[armorLocation] - currentTotalQty;
-
-    if (requiredQty <= 0) {
-        return instances;
-    }
-
     const remain = requiredQty - sum;
 
-    if (remain <= 0) {
-        return instances;
-    }
-
-    let distribute = remain / amountDistribute;
+    let distribute = remain > 0 && requiredQty > 0 ? remain / amountDistribute : 0;
     const isOdd = distribute % 1 != 0;
 
     if (isOdd) {
