@@ -654,7 +654,19 @@ function runCommand(input) {
             return;
         }
 
+        let deepCopyInstances = structuredClone(createdInstances);
+
         // save parsed instances into createdInstances (append) so the UI basket reflects the command
+        parsedInstances.forEach(instance => {
+            const foundIndex = deepCopyInstances.findIndex(inst => inst.name == instance.name && inst.amount == instance.amount);
+
+            if (foundIndex >= 0) {
+                deepCopyInstances = deepCopyInstances.splice(foundIndex, 1);
+            } else {
+                createdInstances.push(instance);
+            }
+        });
+
         createdInstances = createdInstances.concat(parsedInstances);
 
         const totalQty = createdInstances.reduce((accumulator, instance) => {
