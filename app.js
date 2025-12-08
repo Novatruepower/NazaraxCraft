@@ -18,9 +18,9 @@ const EArmorLocation = {
 };
 
 const EArmor = {
-    top: { name: "Top", loc: EArmorLocation.Head },
-    mid: { name: "Mid", loc: EArmorLocation.Body },
-    low: { name: "Low", loc: EArmorLocation.Leg },
+    head: { name: "Head", loc: EArmorLocation.Head },
+    body: { name: "Body", loc: EArmorLocation.Body },
+    leg: { name: "Leg", loc: EArmorLocation.Leg },
     buckler: { name: "Buckler", loc: EArmorLocation.Shield },
     roundshield: { name: "RoundShield", loc: EArmorLocation.Shield },
     greatshield: { name: "GreatShield", loc: EArmorLocation.Shield },
@@ -498,7 +498,7 @@ function writeOutput(text, framed = true) {
 function showUsage() {
     const lines = [
         "Usage: <Armor> <CrafterLevel> [<Material1> [<Quantity1>] ... ]",
-        "Example: Mid 2 Steel 2 Iron",
+        "Example: body 2 Steel 2 Iron",
         "You can also use commands: armors, materials, usage, clear"
     ];
     writeOutput(lines.join("\n"), true);
@@ -611,8 +611,16 @@ function runCommand(input) {
         return;
     }
     if (lower === "armors") {
-        // We don't have a full Armor dataset here; show armor types and examples
-        writeOutput("Armor Types: SuperLight, Light, Normal, Heavy, SuperHeavy\nUse <ArmorName> <CrafterLevel> <Materials...>", true);
+        const data = Object.values(EArmor);
+        const armors = {"d2": "f", "d3": "h"};
+        data.forEach(d => armors[d.loc] ? armors[d.loc] += ` ${d.name}` : armors[d.loc] = d.name);
+        let chaine = "";
+
+        for (const key in armors) {
+            chaine += `${key}:${armors[key]}\n`;
+        }
+
+        writeOutput(`${chaine}Use <ArmorName> <CrafterLevel> <Materials...>`, true);
         return;
     }
 
