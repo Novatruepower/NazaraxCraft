@@ -748,7 +748,7 @@ function updatePageWidth() {
         });
     }
 
-    writeOutput("Welcome — type 'usage' to see syntax or try: Mid 2 Steel 2 Iron", true);
+    writeOutput("Welcome — type 'usage' to see syntax or try: body 2 Steel 2 Iron", true);
 }
 
 /* ---------- initialize ---------- */
