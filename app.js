@@ -661,9 +661,12 @@ function runCommand(input) {
 
             if (foundIndex >= 0) {
                 deepCopyInstances = deepCopyInstances.splice(foundIndex, 1);
-            } else {
-                createdInstances.push(instance);
-            }
+                createdInstances = createdInstances.splice(foundIndex, 1);
+            } 
+
+            console.log(deepCopyInstances);
+
+            createdInstances.push(instance);
         });
 
         updateSelectedList();
