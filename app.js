@@ -658,7 +658,7 @@ function runCommand(input) {
 
         // save parsed instances into createdInstances (append) so the UI basket reflects the command
         parsedInstances.forEach(instance => {
-            const foundIndex = deepCopyInstances.findIndex(inst => inst.name == instance.name && inst.amount == instance.amount);
+            const foundIndex = deepCopyInstances.findIndex(inst => inst.name == instance.name && inst.amount == instance.amount && inst.category == instance.category);
 
             if (foundIndex >= 0) {
                 deepCopyInstances = deepCopyInstances.splice(foundIndex, 1);
