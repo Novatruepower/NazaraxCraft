@@ -541,7 +541,7 @@ function parseMaterialsFromTokens(tokens, armorLocation = null) {
         }
     }
     const materials = Object.keys(dictio)
-    const requiredQty = craftingQTYData[armorLocation] - ;
+    const requiredQty = craftingQTYData[armorLocation] - 0;
     const remain = requiredQty - sum;
     let distribute = remain / amountDistribute;
     const isOdd = distribute % 1 != 0;
