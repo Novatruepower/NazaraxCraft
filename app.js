@@ -654,6 +654,7 @@ function runCommand(input) {
         }
 
         let deepCopyInstances = structuredClone(createdInstances);
+        console.log(deepCopyInstances);
 
         // save parsed instances into createdInstances (append) so the UI basket reflects the command
         parsedInstances.forEach(instance => {
@@ -663,8 +664,6 @@ function runCommand(input) {
                 deepCopyInstances = deepCopyInstances.splice(foundIndex, 1);
                 createdInstances = createdInstances.splice(foundIndex, 1);
             } 
-
-            console.log(deepCopyInstances);
 
             createdInstances.push(instance);
         });
