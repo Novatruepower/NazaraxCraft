@@ -645,7 +645,6 @@ function runCommand(input) {
         }
 
         const parsedInstances = parseMaterialsFromTokens(rest, armor.loc);
-        updateSelectedList();
 
         // collect not found
         const notFound = parsedInstances.filter(i => i._notFound);
@@ -666,6 +665,8 @@ function runCommand(input) {
                 createdInstances.push(instance);
             }
         });
+
+        updateSelectedList();
 
         const totalQty = createdInstances.reduce((accumulator, instance) => {
             return accumulator + instance.amount;
