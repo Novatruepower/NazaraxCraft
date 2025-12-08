@@ -675,6 +675,7 @@ function runCommand(input) {
         }
 
         writeOutput(outLines.join("\n"), true);
+        updateSelectedList();
         return;
     }
 
