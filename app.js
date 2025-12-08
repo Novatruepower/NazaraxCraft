@@ -540,9 +540,25 @@ function parseMaterialsFromTokens(tokens, armorLocation = null) {
             sum += value;
         }
     }
-    const materials = Object.keys(dictio)
-    const requiredQty = craftingQTYData[armorLocation] - 0;
+    const materials = Object.keys(dictio);
+    const currentTotalQty = createdInstances.reduce((accumulator, instance) => {
+        return accumulator + instance.amount;
+    }, 0);
+
+    // tokens is array of remaining tokens (strings)
+    const instances = [];
+    const requiredQty = craftingQTYData[armorLocation] - currentTotalQty;
+
+    if (requiredQty <= 0) {
+        return instances;
+    }
+
     const remain = requiredQty - sum;
+
+    if (remain <= 0) {
+        return instances;
+    }
+
     let distribute = remain / amountDistribute;
     const isOdd = distribute % 1 != 0;
 
@@ -551,9 +567,6 @@ function parseMaterialsFromTokens(tokens, armorLocation = null) {
     }
 
     distribute = Math.trunc(distribute);
-    
-    // tokens is array of remaining tokens (strings)
-    const instances = [];
 
     materials.forEach(name => {
         const material = dictio[name];
