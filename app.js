@@ -648,12 +648,12 @@ function runCommand(input) {
             return accumulator + instance.amount;
         }, 0);
 
+        updateSelectedList();
+
         if (totalQty != craftingQTYData[armor.loc]) {
             writeOutput(`Required '${craftingQTYData[armor.loc]}' materials. Got: ${totalQty}`, true);
             return;
         }
-
-        updateSelectedList();
 
         const baseDefense = 0;
         const baseWeight = 0;
@@ -675,7 +675,6 @@ function runCommand(input) {
         }
 
         writeOutput(outLines.join("\n"), true);
-        updateSelectedList();
         return;
     }
 
