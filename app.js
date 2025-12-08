@@ -612,7 +612,7 @@ function runCommand(input) {
     }
     if (lower === "armors") {
         const data = Object.values(EArmor);
-        const armors = {"d2": "f", "d3": "h"};
+        const armors = {};
         data.forEach(d => armors[d.loc] ? armors[d.loc] += ` ${d.name}` : armors[d.loc] = d.name);
         let chaine = "";
 
