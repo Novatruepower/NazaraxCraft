@@ -541,7 +541,7 @@ function parseMaterialsFromTokens(tokens, armorLocation = null) {
         }
     }
     const materials = Object.keys(dictio)
-    const requiredQty = craftingQTYData[armorLocation];
+    const requiredQty = craftingQTYData[armorLocation] - ;
     const remain = requiredQty - sum;
     let distribute = remain / amountDistribute;
     const isOdd = distribute % 1 != 0;
@@ -633,6 +633,7 @@ function runCommand(input) {
         }
 
         const parsedInstances = parseMaterialsFromTokens(rest, armor.loc);
+        updateSelectedList();
 
         // collect not found
         const notFound = parsedInstances.filter(i => i._notFound);
@@ -647,8 +648,6 @@ function runCommand(input) {
         const totalQty = createdInstances.reduce((accumulator, instance) => {
             return accumulator + instance.amount;
         }, 0);
-
-        updateSelectedList();
 
         if (totalQty != craftingQTYData[armor.loc]) {
             writeOutput(`Required '${craftingQTYData[armor.loc]}' materials. Got: ${totalQty}`, true);
